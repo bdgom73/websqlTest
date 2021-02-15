@@ -91,10 +91,7 @@ export default function InsertPage(props) {
                  
             <button type="submit" className="btn btn-default">Insert</button>
         </form>
-        <form onSubmit={(e)=>{e.preventDefault()}}>
-        <input type="text" required></input>
-        <button type="submit" className="btn btn-default">Insert</button>
-        </form>
+        
         </>
     );
 }
