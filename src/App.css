@@ -1,0 +1,18 @@
+.emailCopy{
+  position:absolute;
+  top:30px;
+  left:5px;
+  width:400px;
+  background-color:#ece13e;
+  padding:5px;
+  cursor: pointer;
+}
+.emailCopy::before{
+  position: absolute;
+  top:-10px;
+  content: "";
+  border-bottom: 10px solid;
+  border-left: 10px solid rgba(0,0,0, 0);
+  border-right: 10px solid rgba(0,0,0, 0);
+  color: #ece13e;
+}
