@@ -37,7 +37,7 @@ export default function Help(props) {
                         <li><button className="btn btn-default" disabled>F12</button>를 클릭해 개발자도구를 엽니다.</li><br/>
                         <li>
                             <span>[Application] - [Storage] - Web Sql 선택 후 [Clear site data] 클릭을 합니다.</span>
-                            <div className="img-thumbnail" style={{width:"100%",minHeight:"300px",backgroundImage:"url('/helpdev.jpg')",backgroundSize:"cover",backgroundRepeat:"no-repeat"}}/>
+                            <img src="/helpdev.jpg" className="img-thumbnail" style={{width:"100%"}}/>
                         </li><br/> 
                         <li>
                             새로고침 후 비워진 DataBase를 다시 적용합니다.
