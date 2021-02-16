@@ -22,7 +22,7 @@ export default function Header(){
             <ul className="nav navbar-nav">
               <li><NavLink to="/table/create" activeStyle={ActiveStyle}>Create</NavLink></li>
               <li><NavLink to="/table" exact activeStyle={ActiveStyle}>Tables</NavLink></li>       
-              <li className="dropdown">
+              {/* <li className="dropdown">
                 <NavLink to="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Developing...<span className="caret"></span></NavLink>
                 <ul className="dropdown-menu" role="menu">
                   <li><NavLink to="#">Developing...</NavLink></li>
@@ -33,7 +33,7 @@ export default function Header(){
                   <li><NavLink to="#">Developing...</NavLink></li>
                   <li><NavLink to="#">Developing...</NavLink></li>
                 </ul>
-              </li>
+              </li> */}
               <li><NavLink to="/help" activeStyle={ActiveStyle}><span className="glyphicon glyphicon-question-sign"></span>{` HELP`}</NavLink></li>
             </ul>
           </div>

@@ -4,6 +4,8 @@ import { createTable, findTableList, findTablesName } from "../DB";
 import InsertPage from "./insert";
 import TableDetail from "./tableDetail";
 import UpdatePage from "./update";
+import "antd/dist/antd.css";
+import NotFound from "./notfound";
 export default  function DBpage(props) {
 
     const ActiveStyle = {
@@ -41,7 +43,6 @@ export default  function DBpage(props) {
                                 }
                             </ul>
                     </li>
-                    <li role="presentation"><NavLink to="/db/option"  activeStyle={ActiveStyle}>Option</NavLink></li>
                 </ul>
             </div>
             <div className="col-md-8">   
@@ -51,6 +52,7 @@ export default  function DBpage(props) {
                     <Route path="/table/:tableName" exact><TableDetail/></Route>
                     <Route path="/table/:tableName/insert" exact><InsertPage/></Route>
                     <Route path="/table/:tableName/:id/update" exact><UpdatePage/></Route>
+                    <Route component={NotFound}></Route>
                 </Switch>
             </div>
         </div>
@@ -108,11 +110,13 @@ function CreateTablePage(props) {
     const history = useHistory();
     const onSubmitHandler = (e)=>{
         e.preventDefault();
-        let columns = []; let dataType = []; let nu = []; let value = [];
+        let columns = []; let dataType = []; let nu = []; let wdata=[];
+        let value = [];
         for(let i = 0 ; i < e.target.length ; i++){      
             if(e.target[i].id.indexOf("column") != -1){columns.push(e.target[i].value);}
             if(e.target[i].id.indexOf("dataType") != -1){  dataType.push(e.target[i].value);}
             if(e.target[i].id.indexOf("isnull")!= -1){nu.push(e.target[i].checked);}
+            if(e.target[i].id.indexOf("date")!= -1){wdata.push(e.target[i].checked);}
         }
         for(let j = 0 ; j < columns.length ; j++){ 
             value.push(`${columns[j]} ${dataType[j]} ${nu[j] ? "Not Null" : ""}`)
@@ -120,7 +124,7 @@ function CreateTablePage(props) {
         const tn = e.target[0].value
         findTablesName(e.target[0].value,(table,_)=>{
             if(!table){          
-                createTable(e.target[0].value,value,()=>{
+                createTable(e.target[0].value,value,wdata,()=>{
                     alert(`${e.target[0].value}테이블이 생성되었습니다.`);
                     e.target[0].value = "";
                     setCs(1)
@@ -142,7 +146,8 @@ function CreateTablePage(props) {
         for(let i = 0; i < cs ; i++){
             c.push(
             <>
-            <div className="row" key={i}>
+            <hr></hr>
+            <div className="row" key={i} style={{marginTop:"30px"}}>
                 <div className="col-md-6">
                     <label htmlFor={`column${i+1}`}>컬럼{i+1}</label>
                     <input type="text" className="form-control" id={`column${i+1}`} placeholder={`컬럼명${i+1}`} required pattern={pattern}/>
@@ -163,8 +168,10 @@ function CreateTablePage(props) {
                         <option value="VARCHAR" disabled>VARCHAR</option>
                     </select>      
                 </div>
-                <div className="col-md-3" style={{display:"flex", alignItems:"center", height:61}}>
+                <div className="col-md-3" style={{display:"flex", alignItems:"flex-start",justifyContent:"flex-start", height:"61px",flexDirection:"column"}}>
                     <label htmlFor="isnull" >NOT NULL<input type="checkbox" value="Not null" id="isnull" style={{marginLeft:"10px"}}/></label>
+                    <label htmlFor="date" >날짜<input type="checkbox" value="date" id="date" style={{marginLeft:"10px"}}/><p class="text-danger"><small>날짜시 체크</small></p></label>
+                    
                 </div>
             </div>
             </>
@@ -188,7 +195,7 @@ function CreateTablePage(props) {
             <div className="form-group">
                 <h5 style={{fontWeight:"bold"}}>테이블 컬럼명</h5>
                 <p class="text-danger"><small>첫 글자는 [a-z,A-Z]으로만 가능하고, 그 이후 [a-z , A-Z , 0~9, _] 만 사용가능합니다.</small></p>
-                <div className="form-group">
+                <div className="form-group" >
                     {
                         column.map(c=>{
                             return c    

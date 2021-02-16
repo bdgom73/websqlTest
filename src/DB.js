@@ -130,17 +130,19 @@ export function createSQL(sql,arg,cb,err) {
     }
 }
 
-export function createTable(tableName,rows,cb,err){
+export function createTable(tableName,rows,date,cb,err){
     if(db){
     try{
         let tableColumnName = [];
         let sql = `CREATE TABLE ${tableName} (id INTEGER Primary key,`;
         for(let i = 0; i < rows.length ; i++){
             sql = sql+rows[i]+","; 
-            tableColumnName.push(rows[i]);       
+            tableColumnName.push(rows[i] + " " + date[i]);       
         }
+
         sql = sql.substr(0, (sql.length-1));
         sql = sql + ")";
+        console.log(sql);
         db.transaction((tx)=>{
             tx.executeSql(sql ,[] ,(tx,result)=>{
                 insert("TABLES",["tableName","created","key"],[tableName, new Date().format(new Date()),tableColumnName]);

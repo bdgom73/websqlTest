@@ -45,7 +45,7 @@ export default function Home(props) {
                 <span>
                     {
                         tables.length === 0 ? (
-                            <><h4>생성된 테이블이 없습니다. <small className="text-lowercase"><Link to="#">테이블 생성하기</Link></small></h4></>
+                            <><h4>생성된 테이블이 없습니다. <small className="text-lowercase"><Link to="/table/create">테이블 생성하기</Link></small></h4></>
                         ) : (
                             <>
                             <div className="panel panel-default">

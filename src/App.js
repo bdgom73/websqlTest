@@ -8,6 +8,7 @@ import Help from './component/help';
 import Home from './component/home';
 import "./DB";
 import { createTable, update } from './DB';
+import NotFound from './component/notfound';
 const App = () => {
 
   const [info,setInfo] = useState({padding:"10px",display: "block"});
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/" exact><Home/></Route>
           <Route path="/table"><DBpage/></Route>
           <Route path="/help"><Help/></Route>
+          <Route component={NotFound}></Route>
         </Switch>
         
     </div>
