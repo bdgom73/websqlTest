@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { DefaultTableColumnName, findAll, insert } from "../DB";
+import { DefaultTableColumnName, findAll, findById, insert } from "../DB";
 import { Button, DatePicker, version } from "antd";
 import "../App.css"
 export default function InsertPage(props) {
 
     const params = useParams();
     const history = useHistory();
+
     const [key,setKey] = useState([]);
     const [dt,setDt] = useState([]);
     const [n,setN] = useState([]);
@@ -15,7 +16,6 @@ export default function InsertPage(props) {
         DefaultTableColumnName(params.tableName,(result)=>{
             if(result){  
                 const b =result.key.split(",");   
-                console.log(b); 
                 setKey(b)
                 for(let i =0; i < b.length ; i++){
                     let bb = b[i].split(" ");   
@@ -26,24 +26,24 @@ export default function InsertPage(props) {
                     if(b[i].split(" ")[2]){
                         n.push(b[i].split(" ")[2]+" " + b[i].split(" ")[3]);
                         setN(n);
-                        console.log(n);
                     }else{
                         n.push("");
                         setN(n);
                     }
                     isDate.push(b[i].split(" ")[(bb.length-1)] === 'true')
-                    setIsDate(isDate)
-                }
-              
+                    setIsDate(isDate)  
+                }   
             }else{
                 alert(`${params.tableName} 테이블이 존재하지않습니다.`);
-            history.push("/");
+                history.push("/");
             }
+           
         },(e)=>{
             console.log(e)
             alert(`${params.tableName} 테이블이 존재하지않습니다.`);
             history.push("/");
         })
+        
     },[])
 
     const onSubmitInsert = (e)=>{  
@@ -84,7 +84,7 @@ export default function InsertPage(props) {
                                 <div className="col-md-8" key={k}>
                                     <div className="form-group">
                                     <label htmlFor={k}>{k}</label>
-                                        <DatePicker style={{width:"100%"}}/>
+                                        <DatePicker style={{width:"100%"}} />
                                     </div>
                                 </div>
                                 <div className="col-md-3" style={{display:"flex",justifyContent:"flex-end",flexDirection:"column",height:"74px"}}> 
