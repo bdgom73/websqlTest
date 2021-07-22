@@ -32,7 +32,7 @@ export default function Home(props) {
     function createBasicBoardTable(e) {
         e.preventDefault();
         if(window.confirm("게시판 관련 테이블을 생성하시겠습니까?")){
-            createTable("testBoard",["title TEXT","description TEXT","creator TEXT","created TEXT","updated TEXT"]);
+            createTable("testBoard",["title TEXT","description TEXT","creator TEXT","created TEXT","updated TEXT"],[false]);
         }
     }
     return(
@@ -62,13 +62,11 @@ export default function Home(props) {
                                 {
                                     tables.map(t=>{
                                         return(
-                                            <>
-                                                <tr key={t.id+(t.id+1)} className="table-hover">
-                                                    <td>{t.id}</td> 
-                                                    <td>{t.tableName}</td>  
-                                                    <td>{t.created}</td>                
-                                                </tr>
-                                            </>
+                                            <tr key={t.id+(t.id+1)} className="table-hover">
+                                                <td>{t.id}</td> 
+                                                <td>{t.tableName}</td>  
+                                                <td>{t.created}</td>                
+                                            </tr>
                                         );
                                     })
                                 }
@@ -81,7 +79,7 @@ export default function Home(props) {
                 </span>
             </p>
             <p>
-                <button type="button" className="btn btn-lg btn-primary" href="/db/table/create" role="button" onClick={createBasicBoardTable} disabled={btnAct}> 
+                <button type="button" className="btn btn-lg btn-primary" href="/db/table/create" onClick={createBasicBoardTable} disabled={btnAct}> 
                     게시판 관련 테이블 생성하기 
                 </button>
             </p>    

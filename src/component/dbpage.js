@@ -29,15 +29,13 @@ export default  function DBpage(props) {
                 <ul className="nav nav-pills nav-stacked">
                     <li role="presentation" ><NavLink to="/table/create" activeStyle={ActiveStyle}>CreateTable</NavLink></li>
                     <li className="dropdown">
-                        <a className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">TableList<span className="caret"></span></a>
+                        <Link className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">TableList<span className="caret"></span></Link>
                             <ul className="dropdown-menu" role="menu">
                                 {
                                     tableList.length !==0 ?
                                     tableList.map(t=>{
                                         return (
-                                        <>
                                             <li key={t.id}><a href={"/table/"+t.tableName} activeStyle={ActiveStyle}>{t.tableName}</a></li>
-                                        </>
                                         )
                                     }) : <li className="text-center"><small><mark>생성된 테이블이 없습니다.</mark></small></li>
                                 }
@@ -104,7 +102,7 @@ function AllTables(props) {
     );
 }
 function CreateTablePage(props) {
-    const pattern = "^[A-Za-z]*[A-Za-z0-9_]"
+    const pattern = "^[A-Za-z]([A-Za-z0-9_])*"
     const [cs,setCs] = useState(1);
     const [column,setColumn] = useState([]);
     const history = useHistory();
@@ -113,10 +111,10 @@ function CreateTablePage(props) {
         let columns = []; let dataType = []; let nu = []; let wdata=[];
         let value = [];
         for(let i = 0 ; i < e.target.length ; i++){      
-            if(e.target[i].id.indexOf("column") != -1){columns.push(e.target[i].value);}
-            if(e.target[i].id.indexOf("dataType") != -1){  dataType.push(e.target[i].value);}
-            if(e.target[i].id.indexOf("isnull")!= -1){nu.push(e.target[i].checked);}
-            if(e.target[i].id.indexOf("date")!= -1){wdata.push(e.target[i].checked);}
+            if(e.target[i].id.indexOf("column") !== -1){columns.push(e.target[i].value);}
+            if(e.target[i].id.indexOf("dataType") !== -1){  dataType.push(e.target[i].value);}
+            if(e.target[i].id.indexOf("isnull")!== -1){nu.push(e.target[i].checked);}
+            if(e.target[i].id.indexOf("date")!== -1){wdata.push(e.target[i].checked);}
         }
         for(let j = 0 ; j < columns.length ; j++){ 
             value.push(`${columns[j]} ${dataType[j]} ${nu[j] ? "Not Null" : ""}`)
@@ -124,15 +122,16 @@ function CreateTablePage(props) {
         const tn = e.target[0].value
         findTablesName(e.target[0].value,(table,_)=>{
             if(!table){          
-                createTable(e.target[0].value,value,wdata,()=>{
-                    alert(`${e.target[0].value}테이블이 생성되었습니다.`);
+                createTable(e.target[0].value,value,wdata,(sql)=>{
+                    alert(`${e.target[0].value}테이블이 생성되었습니다.\r\n ${sql}`);
                     e.target[0].value = "";
                     setCs(1)
                     for(let i = 0 ; i < e.target.length ; i++){      
-                        if(e.target[i].id.indexOf("column") != -1)(e.target[i].value = "")    
+                        if(e.target[i].id.indexOf("column") !== -1)(e.target[i].value = "")    
                     }
                     history.push(`/table/${tn}`);
-                })
+                });
+
             }else{
                 alert("존재하는 테이블입니다.");
             }
